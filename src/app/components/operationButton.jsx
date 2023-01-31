@@ -1,16 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const OperationButton = ({ styleBtn, onAction, name }) => {
+const OperationButton = ({ onAction, name }) => {
     return (
-        <button className={'btn btn-' + styleBtn} onClick={onAction}>
+        <button className={'btn btn-sm'} onClick={onAction}>
             {name}
         </button>
     )
 }
 
 OperationButton.propTypes = {
-    styleBtn: PropTypes.string,
     onAction: PropTypes.func,
     name: PropTypes.string
 }

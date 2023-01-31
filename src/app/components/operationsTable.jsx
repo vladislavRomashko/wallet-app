@@ -21,13 +21,12 @@ const OperationsTable = ({ operations, onDelete }) => {
             component: (operation) => (
                 <>
                     <Link to={`operations/${operation._id}`}>
-                        <OperationButton styleBtn={'warning'} name={'Edit'} />
+                        <OperationButton name={<i className="bi bi-pencil-square"></i>} />
                     </Link>
 
                     <OperationButton
-                        styleBtn={'danger'}
                         onAction={() => onDelete(operation._id)}
-                        name={'Delete'}
+                        name={<i className="bi bi-trash3"></i>}
                     />
                 </>
             )
