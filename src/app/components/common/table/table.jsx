@@ -8,12 +8,11 @@ const Table = ({ data, columns, children }) => {
         <table className="table">
             {children || (
                 <>
-                    <TableHeader {...{ columns }}/>
-                    <TableBody {...{ data, columns }} /></>
-
+                    <TableHeader {...{ columns }} />
+                    <TableBody {...{ data, columns }} />
+                </>
             )}
         </table>
-
     )
 }
 

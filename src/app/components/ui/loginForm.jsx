@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import TextField from './textField'
-import { validator } from '../utils/validator'
+import TextField from '../common/form/textField'
+import { validator } from '../../utils/validator'
 
 const LoginForm = () => {
     const [data, setData] = useState({ email: '', password: '' })
@@ -56,37 +56,30 @@ const LoginForm = () => {
     }
 
     return (
-        <div className="container mt-5">
-            <div className="row">
-                <div className="col-md-6 offset-md-3 shadow p-4">
-                    <h1 className="mb-4">Login</h1>
-                    <form onSubmit={handleSubmit}>
-                        <TextField
-                            name="email"
-                            label="Email"
-                            value={data.email}
-                            onChange={handleChange}
-                            error={errors.email}
-                        />
-                        <TextField
-                            name="password"
-                            type="password"
-                            label="Password"
-                            value={data.password}
-                            onChange={handleChange}
-                            error={errors.password}
-                        />
-                        <button
-                            type="submit"
-                            className="btn btn-primary mx-auto w-100"
-                            disabled={!isValid}
-                        >
-                            Отправить
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <form onSubmit={handleSubmit}>
+            <TextField
+                name="email"
+                label="Email"
+                value={data.email}
+                onChange={handleChange}
+                error={errors.email}
+            />
+            <TextField
+                name="password"
+                type="password"
+                label="Password"
+                value={data.password}
+                onChange={handleChange}
+                error={errors.password}
+            />
+            <button
+                type="submit"
+                className="btn btn-primary mx-auto w-100"
+                disabled={!isValid}
+            >
+                Отправить
+            </button>
+        </form>
     )
 }
 

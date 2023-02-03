@@ -1,20 +1,21 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import MainPage from './layouts/mainPage'
-import LogInPage from './layouts/logInPage'
-import operationsPage from './layouts/operationsPage'
-import NavBar from './components/navBar'
+
+import Main from './layouts/main'
+import Login from './layouts/login'
+import Operations from './layouts//operations'
+import NavBar from './components/ui/navBar'
 
 const App = () => {
     return (
         <>
             <NavBar />
             <Switch>
-                <Route exact path="/" component={MainPage} />
-                <Route path="/login" component={LogInPage} />
+                <Route exact path="/" component={Main} />
+                <Route path="/login/:type?" component={Login} />
                 <Route
                     path="/operations/:operationId?"
-                    component={operationsPage}
+                    component={Operations}
                 />
             </Switch>
         </>

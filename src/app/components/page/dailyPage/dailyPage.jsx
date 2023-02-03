@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import api from '../api'
-import Pagination from './pagination'
-import { paginate } from '../utils/paginate'
-import GroupList from './groupList'
-import PropTypes from 'prop-types'
-import OperationsTable from './operationsTable'
-import SortSelect from './sortSelect'
-import sortOptions from '../utils/sortOptions'
-import Loader from './loader'
+import api from '../../../api'
+import Pagination from '../../common/pagination'
+import { paginate } from '../../../utils/paginate'
+import GroupList from '../../common/groupList'
+import OperationsTable from '../../ui/operationsTable'
+import SortSelect from '../../common/sortSelect'
+import sortOptions from '../../../utils/sortOptions'
+import Loader from '../../common/loader'
 
-const Daily = () => {
+const DailyPage = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [categories, setCategories] = useState()
     const [selectedCat, setSelectedCat] = useState()
@@ -49,10 +48,10 @@ const Daily = () => {
     if (operations) {
         const filteredOperations = selectedCat
             ? operations.filter(
-                (operation) =>
-                    JSON.stringify(selectedCat) ===
-                    JSON.stringify(operation.category)
-            )
+                  (operation) =>
+                      JSON.stringify(selectedCat) ===
+                      JSON.stringify(operation.category)
+              )
             : operations
 
         const count = filteredOperations.length
@@ -87,6 +86,13 @@ const Daily = () => {
                 )}
 
                 <div className="d-flex flex-column">
+                    <div className="d-flex mx-auto text-center">
+                        <SortSelect
+                            onSort={handleChangeSortSign}
+                            value={sortSign}
+                            options={sortOptions}
+                        />
+                    </div>
                     <OperationsTable
                         operations={operationCrop}
                         onDelete={handleDelete}
@@ -100,13 +106,6 @@ const Daily = () => {
                         />
                     </div>
                 </div>
-                <div className="d-flex flex-shrink-0  text-center">
-                    <SortSelect
-                        onSort={handleChangeSortSign}
-                        value={sortSign}
-                        options={sortOptions}
-                    />
-                </div>
             </div>
         )
     }
@@ -117,8 +116,4 @@ const Daily = () => {
     )
 }
 
-Daily.propTypes = {
-    operations: PropTypes.array
-}
-
-export default Daily
+export default DailyPage

@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Category from './category'
+import Category from '../common/category'
 import OperationButton from './operationButton'
-import Table from './table'
+import Table from '../common/table'
 import { Link } from 'react-router-dom'
 
 const OperationsTable = ({ operations, onDelete }) => {
@@ -21,7 +21,9 @@ const OperationsTable = ({ operations, onDelete }) => {
             component: (operation) => (
                 <>
                     <Link to={`operations/${operation._id}`}>
-                        <OperationButton name={<i className="bi bi-pencil-square"></i>} />
+                        <OperationButton
+                            name={<i className="bi bi-pencil-square"></i>}
+                        />
                     </Link>
 
                     <OperationButton
