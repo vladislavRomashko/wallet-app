@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import DailyPage from '../components/page/dailyPage'
-import Operation from '../components/ui/operation'
+import Operation from '../components/page/operationPage'
 
 const Operations = () => {
     const match = useParams()

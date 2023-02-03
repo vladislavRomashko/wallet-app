@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import TextField from '../common/form/textField'
 import { validator } from '../../utils/validator'
+import CheckBoxField from '../common/form/checkBoxField'
 
 const RegisterForm = () => {
-    const [data, setData] = useState({ name: '', email: '', password: '' })
+    const [data, setData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        licence: false
+    })
     const [errors, setErrors] = useState({})
 
     useEffect(() => {
@@ -33,6 +39,12 @@ const RegisterForm = () => {
                 message: 'Пароль должен состоять минимум из 8 символов',
                 value: 8
             }
+        },
+        licence: {
+            isRequired: {
+                message:
+                    'Вы не можете использовать наш сервис без лицензионного соглашения'
+            }
         }
     }
 
@@ -51,7 +63,7 @@ const RegisterForm = () => {
         console.log(data)
     }
 
-    const handleChange = ({ target }) => {
+    const handleChange = (target) => {
         setData((prevState) => ({ ...prevState, [target.name]: target.value }))
     }
 
@@ -74,11 +86,26 @@ const RegisterForm = () => {
             <TextField
                 name="password"
                 type="password"
-                label="Password"
+                label="Введите ваш пароль"
                 value={data.password}
                 onChange={handleChange}
                 error={errors.password}
             />
+            <CheckBoxField
+                name="licence"
+                value={data.licence}
+                onChange={handleChange}
+                error={errors.licence}
+            >
+                Подтвердить{' '}
+                <a
+                    href="https://ru.wikipedia.org/wiki/%D0%9F%D0%BE%D0%BB%D1%8C%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D0%B5%D0%BB%D1%8C%D1%81%D0%BA%D0%BE%D0%B5_%D1%81%D0%BE%D0%B3%D0%BB%D0%B0%D1%88%D0%B5%D0%BD%D0%B8%D0%B5"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    лицензионное соглашение
+                </a>
+            </CheckBoxField>
             <button
                 type="submit"
                 className="btn btn-primary mx-auto w-100"
