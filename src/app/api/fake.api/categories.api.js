@@ -1,33 +1,34 @@
+import { iconsObject as icon } from './icons.api'
 export const categoriesObject = {
     health: {
         _id: '67rdca3eeb7f6fgeed471198',
         name: 'Здоровье',
-        categoryIcon: 'bi bi-flower2'
+        categoryIcon: icon.health.value
     },
     food: {
         _id: '67rdca3eeb7f6fgeed471100',
         name: 'Продукты',
-        categoryIcon: 'bi bi-basket'
+        categoryIcon: icon.basket.value
     },
     transport: {
         _id: '67rdca3eeb7f6fgeed4711012',
         name: 'Транспорт',
-        categoryIcon: 'bi bi-bus-front'
+        categoryIcon: icon.car.value
     },
     house: {
         _id: '67rdca3eeb7f6fgeed471101',
         name: 'Дом',
-        categoryIcon: 'bi bi-house-door'
+        categoryIcon: icon.house.value
     },
     fun: {
         _id: '67rdca3eeb7f6fgeed471102',
         name: 'Досуг',
-        categoryIcon: 'bi bi-film'
+        categoryIcon: icon.film.value
     },
     salary: {
         _id: '67rdca3eeb7f6fgeed471113',
         name: 'Зарплата',
-        categoryIcon: 'bi bi-cash'
+        categoryIcon: icon.cash.value
     }
 }
 
@@ -35,32 +36,32 @@ export const categories = [
     {
         _id: '67rdca3eeb7f6fgeed471198',
         name: 'Здоровье',
-        categoryIcon: 'bi bi-flower2'
+        categoryIcon: icon.health.value
     },
     {
         _id: '67rdca3eeb7f6fgeed471100',
         name: 'Продукты',
-        categoryIcon: 'bi bi-basket'
+        categoryIcon: icon.basket.value
     },
     {
         _id: '67rdca3eeb7f6fgeed4711012',
         name: 'Транспорт',
-        categoryIcon: 'bi bi-bus-front'
+        categoryIcon: icon.car.value
     },
     {
         _id: '67rdca3eeb7f6fgeed471101',
         name: 'Дом',
-        categoryIcon: 'bi bi-house-door'
+        categoryIcon: icon.house.value
     },
     {
         _id: '67rdca3eeb7f6fgeed471102',
         name: 'Досуг',
-        categoryIcon: 'bi bi-film'
+        categoryIcon: icon.film.value
     },
     {
         _id: '67rdca3eeb7f6fgeed471113',
         name: 'Зарплата',
-        categoryIcon: 'bi bi-cash'
+        categoryIcon: icon.cash.value
     }
 ]
 
