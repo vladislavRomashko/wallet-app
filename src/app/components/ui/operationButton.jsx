@@ -11,7 +11,7 @@ const OperationButton = ({ onAction, name }) => {
 
 OperationButton.propTypes = {
     onAction: PropTypes.func,
-    name: PropTypes.string
+    name: PropTypes.object
 }
 
 export default OperationButton

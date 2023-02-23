@@ -1,9 +1,5 @@
 import { categoriesObject as categories } from './categories.api'
-
-const anpointments = {
-    consumption: { _id: 'bbq111', name: 'Расход' },
-    income: { _id: 'bbq112', name: 'Доход' }
-}
+import { anpointmentsObject as anpointments } from './anpointments.api'
 
 const cards = {
     debit: { _id: '654qwe123', name: 'Зарплатная' },
@@ -17,7 +13,7 @@ const operations = [
         card: cards.debit,
         sum: 500,
         comment: 'Покупка косметики',
-        date: '12.12.2012'
+        created_at: '1668899994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471816',
@@ -26,7 +22,7 @@ const operations = [
         card: cards.debit,
         sum: 300,
         comment: 'Покупка еды',
-        date: '12.11.2012'
+        created_at: '1668822294659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471817',
@@ -35,7 +31,7 @@ const operations = [
         card: cards.debit,
         sum: 1500,
         comment: 'Ремонт авто',
-        date: '12.10.2012'
+        created_at: '1622899994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471818',
@@ -44,7 +40,7 @@ const operations = [
         card: cards.debit,
         sum: 5000,
         comment: 'Премия',
-        date: '12.12.2012'
+        created_at: '1668899992222'
     },
     {
         _id: '67rdca3eeb7f6fgeed471819',
@@ -53,7 +49,7 @@ const operations = [
         card: cards.credit,
         sum: 1000,
         comment: 'Поход в кафе',
-        date: '12.12.2012'
+        created_at: '1663339994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471820',
@@ -62,7 +58,7 @@ const operations = [
         card: cards.credit,
         sum: 2500,
         comment: 'Коммунальные',
-        date: '12.12.2012'
+        created_at: '1612399994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471821',
@@ -71,7 +67,7 @@ const operations = [
         card: cards.credit,
         sum: 100,
         comment: 'Покупка овощей',
-        date: '25.12.2012'
+        created_at: '1559899994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471822',
@@ -80,7 +76,7 @@ const operations = [
         card: cards.credit,
         sum: 800,
         comment: 'Заправка авто',
-        date: '23.12.2012'
+        created_at: '1678899994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471823',
@@ -89,7 +85,7 @@ const operations = [
         card: cards.credit,
         sum: 1000,
         comment: 'Поход в кино',
-        date: '05.12.2012'
+        created_at: '1768899994659'
     },
     {
         _id: '67rdca3eeb7f6fgeed471824',
@@ -98,25 +94,68 @@ const operations = [
         card: cards.credit,
         sum: 1200,
         comment: 'Покупка косметики',
-        date: '01.12.2012'
+        created_at: '1668895594659'
     }
 ]
+
+if (!localStorage.getItem('operations')) {
+    localStorage.setItem('operations', JSON.stringify(operations))
+}
 
 const fetchAll = () =>
     new Promise((resolve) => {
         setTimeout(() => {
-            resolve(operations)
+            resolve(JSON.parse(localStorage.getItem('operations')))
         }, 2000)
+    })
+
+const update = (id, data) =>
+    new Promise((resolve) => {
+        const operations = JSON.parse(localStorage.getItem('operations'))
+        const operationIndex = operations.findIndex((o) => o._id === id)
+        operations[operationIndex] = { ...operations[operationIndex], ...data }
+        localStorage.setItem('operations', JSON.stringify(operations))
+        resolve(operations[operationIndex])
     })
 
 const getById = (id) =>
     new Promise((resolve) => {
         setTimeout(() => {
-            resolve(operations.find((operation) => operation._id === id))
+            resolve(
+                JSON.parse(localStorage.getItem('operations')).find(
+                    (operation) => operation._id === id
+                )
+            )
         }, 1000)
+    })
+
+const removeById = (id) =>
+    new Promise((resolve) => {
+        const operations = JSON.parse(localStorage.getItem('operations'))
+        const filteredOperation = operations.filter((o) => o._id !== id)
+        localStorage.setItem('operations', JSON.stringify(filteredOperation))
+        resolve(filteredOperation)
+    })
+
+const add = (data) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            const operations = JSON.parse(localStorage.getItem('operations'))
+            const newOperation = {
+                ...data,
+                // created_at: Date.now(),
+                _id: Math.random().toString(36).substr(2, 9)
+            }
+            operations.push(newOperation)
+            localStorage.setItem('operations', JSON.stringify(operations))
+            resolve(newOperation)
+        }, 200)
     })
 
 export default {
     fetchAll,
-    getById
+    getById,
+    update,
+    removeById,
+    add
 }

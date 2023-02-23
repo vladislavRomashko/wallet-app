@@ -65,13 +65,32 @@ export const categories = [
     }
 ]
 
+if (!localStorage.getItem('categories')) {
+    localStorage.setItem('categories', JSON.stringify(categories))
+}
+
 const fetchAll = () =>
     new Promise((resolve) => {
         setTimeout(() => {
-            resolve(categories)
+            resolve(JSON.parse(localStorage.getItem('categories')))
         }, 2000)
     })
 
+const add = (data) =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            const categories = JSON.parse(localStorage.getItem('categories'))
+            const newCategories = {
+                _id: Math.random().toString(36).substr(2, 9),
+                ...data
+            }
+            categories.push(newCategories)
+            localStorage.setItem('categories', JSON.stringify(categories))
+            resolve(newCategories)
+        }, 200)
+    })
+
 export default {
-    fetchAll
+    fetchAll,
+    add
 }

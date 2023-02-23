@@ -13,16 +13,16 @@ const sortOptions = [
             _.orderBy(filteredOperations, ['sum'], ['desc'])
     },
     {
-        value: 'dateASC',
+        value: 'created_atASC',
         label: 'По дате от старых',
         sort: (filteredOperations) =>
-            _.orderBy(filteredOperations, ['date'], ['asc'])
+            _.orderBy(filteredOperations, ['created_at'], ['asc'])
     },
     {
-        value: 'dateDESC',
+        value: 'created_atDESC',
         label: 'По дате от новых',
         sort: (filteredOperations) =>
-            _.orderBy(filteredOperations, ['date'], ['desc'])
+            _.orderBy(filteredOperations, ['created_at'], ['desc'])
     }
 ]
 

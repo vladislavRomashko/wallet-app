@@ -1,15 +1,24 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { displayDate } from '../../../utils/displayDate'
 
 const TextField = ({ name, label, type, value, onChange, error }) => {
     const [showPassword, setShowPassword] = useState(false)
 
+    const transformValue = (data) => {
+        return displayDate(data)
+    }
     const toggleShowPassword = () => {
         setShowPassword((prevState) => !prevState)
     }
 
     const handleChange = ({ target }) => {
-        onChange({ name: target.name, value: target.value })
+        if (type === 'date') {
+            console.log(target.valueAsNumber)
+            onChange({ name: target.name, value: target.valueAsNumber })
+        } else {
+            onChange({ name: target.name, value: target.value })
+        }
     }
 
     const getInputClasses = () => {
@@ -25,7 +34,7 @@ const TextField = ({ name, label, type, value, onChange, error }) => {
                         className={getInputClasses()}
                         id={name}
                         name={name}
-                        value={value}
+                        value={type === 'date' ? transformValue(value) : value}
                         onChange={handleChange}
                         type={showPassword ? 'text' : type}
                     />
@@ -58,7 +67,7 @@ TextField.propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.string,
     error: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     onChange: PropTypes.func.isRequired
 }
 

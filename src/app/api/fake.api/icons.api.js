@@ -63,11 +63,12 @@ export const icons = [
     { _id: 'asd1494', name: 'mortarboard', value: 'bi bi-mortarboard-fill' }
 ]
 
-const fetchAll = new Promise((resolve) => {
-    setTimeout(() => {
-        resolve(icons)
-    }, 500)
-})
+const fetchAll = () =>
+    new Promise((resolve) => {
+        window.setTimeout(function () {
+            resolve(icons)
+        }, 500)
+    })
 
 export default {
     fetchAll

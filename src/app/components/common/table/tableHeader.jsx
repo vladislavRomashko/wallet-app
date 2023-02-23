@@ -5,8 +5,10 @@ const TableHeader = ({ columns }) => {
     return (
         <thead>
             <tr>
-                {Object.keys(columns).map(column => (
-                    <th key={column} scope="col">{columns[column].name}</th>
+                {Object.keys(columns).map((column) => (
+                    <th key={column} scope="col">
+                        {columns[column].name}
+                    </th>
                 ))}
             </tr>
         </thead>
@@ -14,7 +16,7 @@ const TableHeader = ({ columns }) => {
 }
 
 TableHeader.propTypes = {
-    columns: PropTypes.array.isRequired
+    columns: PropTypes.object.isRequired
 }
 
 export default TableHeader

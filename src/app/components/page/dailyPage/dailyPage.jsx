@@ -7,6 +7,10 @@ import OperationsTable from '../../ui/operationsTable'
 import SortSelect from '../../common/sortSelect'
 import sortOptions from '../../../utils/sortOptions'
 import Loader from '../../common/loader'
+import CreateButton from '../../common/createOperationBtn'
+import { Link } from 'react-router-dom'
+import CounterSum from '../../common/counterSum'
+import _ from 'lodash'
 
 const DailyPage = () => {
     const [currentPage, setCurrentPage] = useState(1)
@@ -15,14 +19,14 @@ const DailyPage = () => {
     const [sortSign, setSortSign] = useState('dateDESC')
     const [operations, setOperations] = useState()
 
-    const pageSize = 5
+    const pageSize = 8
 
     useEffect(() => {
         api.operations.fetchAll().then((data) => setOperations(data))
     }, [])
 
     const handleDelete = (id) => {
-        setOperations(operations.filter((o) => o._id !== id))
+        api.operations.removeById(id).then((data) => setOperations(data))
     }
 
     useEffect(() => {
@@ -31,6 +35,7 @@ const DailyPage = () => {
 
     useEffect(() => {
         setCurrentPage(1)
+        console.log(selectedCat)
     }, [selectedCat])
 
     const handlePageChange = (pageIndex) => {
@@ -47,10 +52,8 @@ const DailyPage = () => {
 
     if (operations) {
         const filteredOperations = selectedCat
-            ? operations.filter(
-                  (operation) =>
-                      JSON.stringify(selectedCat) ===
-                      JSON.stringify(operation.category)
+            ? operations.filter((operation) =>
+                  _.isEqual(selectedCat, operation.category)
               )
             : operations
 
@@ -67,46 +70,86 @@ const DailyPage = () => {
             setSelectedCat()
         }
 
-        return (
-            <div className="d-flex">
-                {categories && (
-                    <div className="d-flex flex-column flex-shrink-0 p-3">
-                        <GroupList
-                            items={categories}
-                            onItemSelect={handleCategorySelect}
-                            selectedItem={selectedCat}
-                        />
-                        <button
-                            className="btn btn-secondary mt-2"
-                            onClick={clearFilter}
-                        >
-                            Reset
-                        </button>
-                    </div>
-                )}
+        const sumOfIncome = operations
+            .filter((operation) => operation.anpointment.name === 'Доход')
+            .reduce((acc, item) => {
+                return (acc += item.sum)
+            }, 0)
 
-                <div className="d-flex flex-column">
-                    <div className="d-flex mx-auto text-center">
+        const sumOfСonsumption = operations
+            .filter((operation) => operation.anpointment.name === 'Расход')
+            .reduce((acc, item) => {
+                return (acc += item.sum)
+            }, 0)
+
+        return (
+            <>
+                <div className="d-flex text-center align-items-center  justify-content-evenly">
+                    <div className="d-flex flex-column">
+                        <Link to="/createOperation">
+                            <CreateButton title="Создать новую операцию" />
+                        </Link>
+                        <Link to="/createCategory">
+                            <CreateButton title="Создать новую категорию" />
+                        </Link>
+                    </div>
+                    <div className="d-flex">
+                        <div className="m-2">
+                            <CounterSum
+                                type="plus"
+                                name="Доход"
+                                sum={sumOfIncome}
+                            />
+                        </div>
+                        <div className="m-2">
+                            <CounterSum
+                                type="minus"
+                                name="Расход"
+                                sum={sumOfСonsumption}
+                            />
+                        </div>
+                    </div>
+                    <div>
                         <SortSelect
                             onSort={handleChangeSortSign}
                             value={sortSign}
                             options={sortOptions}
                         />
                     </div>
-                    <OperationsTable
-                        operations={operationCrop}
-                        onDelete={handleDelete}
-                    />
-                    <div className="d-flex justify-content-center">
-                        <Pagination
-                            currentPage={currentPage}
-                            itemsCount={count}
-                            pageSize={pageSize}
-                            onPageChange={handlePageChange}
+                </div>
+                <div className="d-flex ">
+                    {categories && (
+                        <div className="d-flex flex-column flex-shrink-0 p-3">
+                            <GroupList
+                                items={categories}
+                                onItemSelect={handleCategorySelect}
+                                selectedItem={selectedCat}
+                            />
+                            <button
+                                className="btn btn-secondary mt-2"
+                                onClick={clearFilter}
+                            >
+                                Reset
+                            </button>
+                        </div>
+                    )}
+
+                    <div className="d-flex flex-column flex-grow-1">
+                        <OperationsTable
+                            operations={operationCrop}
+                            onDelete={handleDelete}
                         />
+                        <div className="d-flex justify-content-center">
+                            <Pagination
+                                currentPage={currentPage}
+                                itemsCount={count}
+                                pageSize={pageSize}
+                                onPageChange={handlePageChange}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </>
         )
     }
     return (
