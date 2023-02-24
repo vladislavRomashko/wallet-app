@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import TextField from '../../common/form/textField'
 import { useHistory } from 'react-router-dom'
 import SelectField from '../../common/form/selectField'
-import BackButton from '../../common/backButton'
+import BackButton from '../../common/buttons/backButton'
 
 const Operation = ({ id }) => {
     const [data, setData] = useState({})
